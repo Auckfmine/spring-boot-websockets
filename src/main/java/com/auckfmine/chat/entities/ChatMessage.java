@@ -3,10 +3,7 @@ package com.auckfmine.chat.entities;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -27,5 +24,6 @@ public class ChatMessage {
     String recipientName;
     String content;
     Date timestamp;
+    @Enumerated(EnumType.STRING)
     MessageStatus status;
 }
