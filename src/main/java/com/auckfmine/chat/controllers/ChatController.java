@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class ChatController {
-    @Autowired private SimpMessagingTemplate messagingTemplate;
-    @Autowired private ChatMessageService chatMessageService;
-    @Autowired private ChatRoomService chatRoomService;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+    @Autowired
+    private ChatMessageService chatMessageService;
+    @Autowired
+    private ChatRoomService chatRoomService;
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
@@ -27,7 +30,7 @@ public class ChatController {
 
         ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
-                chatMessage.getRecipientId().toString(),"/queue/messages",chatMessage);
+                chatMessage.getRecipientId().toString(), "/queue/messages", chatMessage);
     }
 
     @GetMapping("/messages/{senderId}/{recipientId}/count")
@@ -40,14 +43,14 @@ public class ChatController {
     }
 
     @GetMapping("/messages/{senderId}/{recipientId}")
-    public ResponseEntity<?> findChatMessages ( @PathVariable Long senderId,
-                                                @PathVariable Long recipientId) {
+    public ResponseEntity<?> findChatMessages(@PathVariable Long senderId,
+                                              @PathVariable Long recipientId) {
         return ResponseEntity
                 .ok(chatMessageService.findChatMessages(senderId, recipientId));
     }
 
     @GetMapping("/messages/{id}")
-    public ResponseEntity<?> findMessage ( @PathVariable Long id) {
+    public ResponseEntity<?> findMessage(@PathVariable Long id) {
         return ResponseEntity
                 .ok(chatMessageService.findById(id));
     }
